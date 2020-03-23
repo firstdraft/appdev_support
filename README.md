@@ -1,5 +1,6 @@
 # AppdevSupport
 
+For Rails gems **only**.
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/appdev_support`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
@@ -9,7 +10,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'appdev_support'
+gem 'appdev_support', git: "https://github.com/firstdraft/appdev_support"
 ```
 
 And then execute:
@@ -22,7 +23,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Once installed, you can do things like:
+
+```ruby
+# in app/controllers/events_controller.rb
+class EventsController < ApplicationController 
+  def index
+    cookies.store(:theme, "dark")
+    cookies.fetch(:theme)
+    session.fetch(:user_id)
+  end
+end
+```
+
+and `session.fetch` will raise a `KeyNotFound` Exception.
+
+`.fetch` can be called on `session`, `cookies`, and any `ActiveRecord` object. For an `ActiveRecord` object, you can `.fetch` a column.
+
+Similarly, `.store` can be called on `session` and `cookies` with the expected behavior. 
+
+Printing an `ActiveRecord:Relation` will display:
+
+```ruby
+"ActiveRecord:Relation:Event (array with 4 Event instances inside)"
+```
+
+You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror how Arrays work.
+
 
 ## Development
 
