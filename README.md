@@ -40,7 +40,15 @@ and `session.fetch` will raise a `KeyNotFound` Exception.
 
 `.fetch` can be called on `session`, `cookies`, and any `ActiveRecord` object. For an `ActiveRecord` object, you can `.fetch` a column.
 
+```ruby
+Event.fetch(:starts_on) # => "Mon, 23 Mar 2020 23:25:48"
+```
+
 Similarly, `.store` can be called on `session` and `cookies` with the expected behavior. 
+
+```ruby
+session.store(:user_id, 1)
+```
 
 Displaying an `ActiveRecord:Relation` in a View file will display:
 
@@ -49,6 +57,10 @@ ActiveRecord:Relation:Event (array with 4 Event instances inside)
 ```
 
 You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror how Arrays work.
+
+```ruby
+Events.all.at(0)
+```
 
 
 ## Development
