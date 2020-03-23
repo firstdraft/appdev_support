@@ -42,7 +42,7 @@ and `session.fetch` will raise a `KeyNotFound` Exception.
 
 Similarly, `.store` can be called on `session` and `cookies` with the expected behavior. 
 
-Printing an `ActiveRecord:Relation` will display:
+Displaying an `ActiveRecord:Relation` in a View file will display:
 
 ```ruby
 "ActiveRecord:Relation:Event (array with 4 Event instances inside)"
