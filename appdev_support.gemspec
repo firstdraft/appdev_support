@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Housekeeping!}
   spec.description   = %q{Includes files}
-  spec.homepage      = "www.firstdraft.com"
+  spec.homepage      = "http://www.firstdraft.com"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
