@@ -44,8 +44,8 @@ Similarly, `.store` can be called on `session` and `cookies` with the expected b
 
 Displaying an `ActiveRecord:Relation` in a View file will display:
 
-```ruby
-"ActiveRecord:Relation:Event (array with 4 Event instances inside)"
+```html
+ActiveRecord:Relation:Event (array with 4 Event instances inside)
 ```
 
 You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror how Arrays work.
