@@ -7,6 +7,8 @@ require "appdev_support/action_dispatch/request/session/store"
 require "appdev_support/action_dispatch/cookies/cookie_jar/fetch"
 require "appdev_support/action_dispatch/cookies/cookie_jar/store"
 
+require 'appdev_support/railite' if defined?(Rails)
+
 module AppdevSupport
   class Error < StandardError; end
   # Your code goes here...
