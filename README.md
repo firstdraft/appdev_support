@@ -21,6 +21,8 @@ Or install it yourself as:
 
     $ gem install appdev_support
 
+See [iniliazer](#configuration).
+
 ## Usage
 
 Once installed, you can do things like:
@@ -62,6 +64,21 @@ You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror 
 Events.all.at(0)
 ```
 
+## Configuration
+
+Add an initializer:
+
+```rb
+# frozen_string_literal: true
+
+AppdevSupport.config do |config|
+# config.action_dispatch = true;
+# config.active_record = true;
+end
+AppdevSupport.init
+```
+
+by default, these settings are `true`. Turn any of them off here. Options are currently grouped by highest parent class.
 
 ## Development
 

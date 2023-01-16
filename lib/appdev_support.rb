@@ -1,13 +1,35 @@
 require "appdev_support/version"
-require "appdev_support/active_record/delegation"
-require "appdev_support/active_record/attribute_methods"
-require "appdev_support/active_record/relation/to_s"
-require "appdev_support/action_dispatch/request/session/fetch"
-require "appdev_support/action_dispatch/request/session/store"
-require "appdev_support/action_dispatch/cookies/cookie_jar/fetch"
-require "appdev_support/action_dispatch/cookies/cookie_jar/store"
 
 module AppdevSupport
   class Error < StandardError; end
-  # Your code goes here...
+
+  class << self
+    attr_writer :active_record, :action_dispatch
+
+    def action_dispatch
+      @action_dispatch || true
+    end
+
+    def active_record
+      @active_record || true
+    end
+
+    def config
+      yield self
+    end
+  end
+
+  def self.init
+    if @active_record
+      load "appdev_support/active_record/delegation.rb"
+      load "appdev_support/active_record/attribute_methods.rb"
+      load "appdev_support/active_record/relation/to_s.rb"
+    end
+    if @action_dispatch
+      load "appdev_support/action_dispatch/request/session/fetch.rb"
+      load "appdev_support/action_dispatch/request/session/store.rb"
+      load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
+      load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
+    end
+  end
 end

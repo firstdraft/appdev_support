@@ -2,8 +2,8 @@ module ActionDispatch
   class Cookies
     class CookieJar
       def fetch(key, *fallback)
-        if keys.include?(key)
-          [key]
+        if has_key?(key)
+          self.[](key)
         elsif fallback.present?
           fallback
         else
