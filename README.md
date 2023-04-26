@@ -1,16 +1,11 @@
 # AppdevSupport
 
-For Rails gems **only**.
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/appdev_support`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'appdev_support', git: "https://github.com/firstdraft/appdev_support"
+gem "appdev_support", git: "https://github.com/firstdraft/appdev_support"
 ```
 
 And then execute:
