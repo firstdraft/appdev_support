@@ -64,13 +64,6 @@ You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror 
 Events.all.at(0)
 ```
 
-If the containing app has `pry` or `pry-rails` installed, the `print` functionality has been enhanced:
-- `ActiveRecord::Relation` objects are displayed like this
-  ```irb
-  Todo.all
-  => Todo::ActiveRecord_Relation (array with 1 Todo instance inside)
-  ```
-
 ## Configuration
 
 Add an initializer:
@@ -80,8 +73,7 @@ Add an initializer:
 
 AppdevSupport.config do |config|
 # config.action_dispatch = true;
-# config.active_record   = true;
-# config.pryrc           = true;
+# config.active_record = true;
 end
 AppdevSupport.init
 ```
