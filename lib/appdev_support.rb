@@ -15,7 +15,7 @@ module AppdevSupport
     end
 
     def pryrc
-      @pryrc || true
+      @pryrc || :base
     end
 
     def config
@@ -35,8 +35,11 @@ module AppdevSupport
       load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
       load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
     end
-    if @pryrc
-      load "appdev_support/pryrc.rb" if Object.const_defined?("Pry")
+    case @pryrc
+    when :base, true
+      load "appdev_support/pryrc/base.rb" if Object.const_defined?("Pry")
+    when :full
+      load "appdev_support/pryrc/full.rb" if Object.const_defined?("Pry")
     end
   end
 end
