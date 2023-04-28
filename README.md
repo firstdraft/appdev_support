@@ -59,6 +59,43 @@ You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror 
 Events.all.at(0)
 ```
 
+If the containing app has `pry` or `pry-rails` installed, the `print` functionality has been enhanced:
+With the value `:base`:
+- `ActiveRecord::Relation` objects are displayed like this:
+  ```irb
+  pry(main)> Todo.all
+  => Todo::ActiveRecord_Relation (array with 1 Todo instance inside)
+  ```
+With the value `:full`
+- `ActiveRecord::Relation` objects are displayed like this:
+  ```irb
+  pry(main)> Todo.all
+  Todo Count (0.3ms)  SELECT COUNT(*) FROM "todos"
+  Todo Load (0.2ms)  SELECT "todos".* FROM "todos"
+  +----+-------+------+---------------------------------------------+
+  | id | title | body | {:header_frequency=>10, :border=>:markdown} |
+  +----+-------+------+---------------------------------------------+
+  |  1 | test  | nope |                                             |
+  +----+-------+------+---------------------------------------------+
+
+    Todo Count (0.3ms)  SELECT COUNT(*) FROM "todos"
+  => Todo::ActiveRecord_Relation (array with 1 Todo instance inside)
+  ```
+- `Class` objects are displayed like this:
+  ```irb
+  pry(main)> Todo
+  => Todo(id: integer, title: string, body: text, created_at: datetime, updated_at: datetime)
+
+  The Todo class itself.
+  ```
+- All other objects are displayed like this:
+  ```irb
+  pry(main)> "hello, world"
+  => "hello, world"
+
+  An instance of the String class.
+  ```
+
 ## Configuration
 
 Add an initializer:
@@ -68,13 +105,15 @@ Add an initializer:
 
 AppdevSupport.config do |config|
 # config.action_dispatch = true;
-# config.active_record = true;
+# config.active_record   = true;
+# config.pryrc           = true;
 end
 AppdevSupport.init
 ```
 
 by default, these settings are `true`. Turn any of them off here. Options are currently grouped by highest parent class.
 
+`pryrc` config has the additional options `:base` or `:full` described above. `:base` is equivalent to `true`.
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
