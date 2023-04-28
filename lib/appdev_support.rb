@@ -1,46 +1,78 @@
 require "appdev_support/version"
+require "appdev_support/appdev_support"
 
 module AppdevSupport
   class Error < StandardError; end
 
-  class << self
-    attr_writer :active_record, :action_dispatch, :pryrc
+  # class << self
+  #   extend Dry::Configurable
+  #   # attr_writer :active_record, :action_dispatch, :pryrc
 
-    def action_dispatch
-      @action_dispatch || true
-    end
+  #   setting :active_record,   default: true
+  #   setting :action_dispatch, default: true
+  #   setting :pryrc do
+  #     setting :level, default: :minimal
 
-    def active_record
-      @active_record || true
-    end
+  #   end
+  
+  #   # def action_dispatch
+  #   #   @action_dispatch || true
+  #   # end
 
-    def pryrc
-      @pryrc || :base
-    end
+  #   # def active_record
+  #   #   @active_record || true
+  #   # end
 
-    def config
-      yield self
-    end
-  end
+  #   # def pryrc
+  #   #   @pryrc || true
+  #   #   yield self
+  #   # end
 
+  #   # def config
+  #   #   yield self
+  #   # end
+  # end
+
+  # def self.init
+  #   if @active_record
+  #     load "appdev_support/active_record/delegation.rb"
+  #     load "appdev_support/active_record/attribute_methods.rb"
+  #     load "appdev_support/active_record/relation/to_s.rb"
+  #   end
+  #   if @action_dispatch
+  #     load "appdev_support/action_dispatch/request/session/fetch.rb"
+  #     load "appdev_support/action_dispatch/request/session/store.rb"
+  #     load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
+  #     load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
+  #   end
+  #   case @pryrc
+  #   when true || :minimal
+  #     load "appdev_support/pryrc/minimal.rb" if Object.const_defined?("Pry")
+  #   when :debug
+  #     load "appdev_support/pryrc/debug.rb" if Object.const_defined?("Pry")
+  #   end
+  # end
   def self.init
-    if @active_record
+    if self.config.active_record
+      puts "loading"
       load "appdev_support/active_record/delegation.rb"
       load "appdev_support/active_record/attribute_methods.rb"
       load "appdev_support/active_record/relation/to_s.rb"
     end
-    if @action_dispatch
+    if self.config.action_dispatch
+      puts "dispatch"
       load "appdev_support/action_dispatch/request/session/fetch.rb"
       load "appdev_support/action_dispatch/request/session/store.rb"
       load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
       load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
     end
-    return unless Object.const_defined?("Pry")
-    case @pryrc
-    when :base, true
-      load "appdev_support/pryrc/base.rb"
-    when :full
-      load "appdev_support/pryrc/full.rb"
+    case self.config.pryrc
+    when :minimal
+      puts "minimal"
+      load "appdev_support/pryrc/minimal.rb" if Object.const_defined?("Pry")
+    when :debug
+      puts "debug"
+      load "appdev_support/pryrc/debug.rb" if Object.const_defined?("Pry")
     end
   end
 end
