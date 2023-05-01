@@ -12,7 +12,12 @@ Pry.config.print = proc do |output, value, _pry_|
     header_frequency = 10
     border_style = :markdown
 
-    table_options = { header_frequency: header_frequency, border: border_style }
+    table_options = {
+      header_frequency: header_frequency,
+      border: border_style,
+      wrap_body_cells_to: 1,
+      truncation_indicator: "…"
+    }
 
     if row_count > max_rows_to_display_at_once
       output.puts Tabulo::Table.new(value.limit(num_rows_to_frame_with), *column_names, table_options).pack
