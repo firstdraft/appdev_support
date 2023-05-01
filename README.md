@@ -21,7 +21,14 @@ Or install it yourself as:
 
     $ gem install appdev_support
 
-See [iniliazer](#configuration).
+Run
+
+```rb
+AppdevSupport.init
+```
+to load the default settings.
+
+Create an [iniliazer](#configuration) file for customization.
 
 ## Usage
 
