@@ -1,4 +1,3 @@
-puts "loaded base"
 Pry.config.print = proc do |output, value, _pry_|
   case value
   when ActiveRecord::Relation
