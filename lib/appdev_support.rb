@@ -21,6 +21,7 @@ module AppdevSupport
 
   def self.init
     if @active_record
+      load "appdev_support/active_record/connection.rb"
       load "appdev_support/active_record/delegation.rb"
       load "appdev_support/active_record/attribute_methods.rb"
       load "appdev_support/active_record/relation/to_s.rb"
