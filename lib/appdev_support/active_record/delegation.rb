@@ -1,5 +1,7 @@
-module ActiveRecord
-  module Delegation
-    alias at []
+module AppdevSupport
+  module ActiveRecord
+    module Delegation
+      alias at []
+    end
   end
 end
