@@ -69,13 +69,13 @@ Events.all.at(0)
 ```
 
 If the containing app has `pry` or `pry-rails` installed, the `print` functionality has been enhanced:
-With the value `:base`:
+With the value `:mimimal`:
 - `ActiveRecord::Relation` objects are displayed like this:
   ```irb
   pry(main)> Todo.all
   => Todo::ActiveRecord_Relation (array with 1 Todo instance inside)
   ```
-With the value `:full`
+With the value `:debug`
 - `ActiveRecord::Relation` objects are displayed like this:
   ```irb
   pry(main)> Todo.all
@@ -112,7 +112,7 @@ Add an initializer:
 ```rb
 # frozen_string_literal: true
 
-AppdevSupport.config do |config|
+AppdevSupport.configure do |config|
 # config.action_dispatch = true;
 # config.active_record   = true;
 # config.pryrc           = :minimal; # :debug
