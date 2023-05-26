@@ -1,7 +1,5 @@
-module AppdevSupport
-  module ActiveRecord
-    module Delegation
-      alias at []
-    end
+module ActiveRecord
+  module Delegation
+    alias_method :at, :[]
   end
 end

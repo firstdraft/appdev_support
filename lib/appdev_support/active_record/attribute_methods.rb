@@ -1,8 +1,6 @@
-module AppdevSupport
-  module ActiveRecord
-    module AttributeMethods
-      alias fetch []
-      alias store []=
-    end
+module ActiveRecord
+  module AttributeMethods
+    alias fetch []
+    alias store []=
   end
 end

@@ -1,89 +1,68 @@
 require "appdev_support/version"
 require "dry-configurable"
-# require "appdev_support/active_record/relation/to_s"
 
 module AppdevSupport
   extend Dry::Configurable
   setting :active_record,   default: true
   setting :action_dispatch, default: true
-  setting :pryrc do
-    setting :level, default: :minimal
-  end
-
-  class << self
-  end
+  setting :pryrc,           default: :minimal
 
   class Error < StandardError; end
 
-  # class << self
-  #   extend Dry::Configurable
-  #   # attr_writer :active_record, :action_dispatch, :pryrc
+  def self.init
+    if config.action_dispatch
+      self.load_active_record_patches
+    end
+    if config.active_record
+      self.load_action_dispatch_patches
+    end
+    if config.pryrc
+      self.load_pryrc_patches
+    end
+  end
 
-  #   setting :active_record,   default: true
-  #   setting :action_dispatch, default: true
-  #   setting :pryrc do
-  #     setting :level, default: :minimal
+  private
 
-  #   end
-  
-  #   # def action_dispatch
-  #   #   @action_dispatch || true
-  #   # end
+  def self.load_active_record_patches
+    active_record_loaded = begin
+      Kernel.const_get("ActiveRecord")
+    rescue NameError
+      false
+    end
+    if active_record_loaded
+      require "appdev_support/active_record/relation/to_s.rb"
+      require "appdev_support/active_record/attribute_methods.rb"
+      require "appdev_support/active_record/calculations.rb"
+      require "appdev_support/active_record/delegation.rb"
+    end
+  end
 
-  #   # def active_record
-  #   #   @active_record || true
-  #   # end
+  def self.load_action_dispatch_patches
+    action_dispatch_loaded = begin
+      Kernel.const_get("ActionDispatch")
+    rescue NameError
+      false
+    end
+    if action_dispatch_loaded
+      require "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
+      require "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
+      require "appdev_support/action_dispatch/request/session/fetch.rb"
+      require "appdev_support/action_dispatch/request/session/store.rb"
+    end
+  end
 
-  #   # def pryrc
-  #   #   @pryrc || true
-  #   #   yield self
-  #   # end
-
-  #   # def config
-  #   #   yield self
-  #   # end
-  # end
-
-  # def self.init
-  #   if @active_record
-  #     load "appdev_support/active_record/delegation.rb"
-  #     load "appdev_support/active_record/attribute_methods.rb"
-  #     load "appdev_support/active_record/relation/to_s.rb"
-  #   end
-  #   if @action_dispatch
-  #     load "appdev_support/action_dispatch/request/session/fetch.rb"
-  #     load "appdev_support/action_dispatch/request/session/store.rb"
-  #     load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
-  #     load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
-  #   end
-  #   case @pryrc
-  #   when true || :minimal
-  #     load "appdev_support/pryrc/minimal.rb" if Object.const_defined?("Pry")
-  #   when :debug
-  #     load "appdev_support/pryrc/debug.rb" if Object.const_defined?("Pry")
-  #   end
-  # end
-  # def self.init
-  #   if self.config.active_record
-  #     puts "loading"
-  #     load "appdev_support/active_record/delegation.rb"
-  #     load "appdev_support/active_record/attribute_methods.rb"
-  #     load "appdev_support/active_record/relation/to_s.rb"
-  #   end
-  #   if self.config.action_dispatch
-  #     puts "dispatch"
-  #     load "appdev_support/action_dispatch/request/session/fetch.rb"
-  #     load "appdev_support/action_dispatch/request/session/store.rb"
-  #     load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
-  #     load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
-  #   end
-  #   case self.config.pryrc
-  #   when :minimal
-  #     puts "minimal"
-  #     load "appdev_support/pryrc/minimal.rb" if Object.const_defined?("Pry")
-  #   when :debug
-  #     puts "debug"
-  #     load "appdev_support/pryrc/debug.rb" if Object.const_defined?("Pry")
-  #   end
-  # end
+  def self.load_pryrc_patches
+    pry_loaded = begin
+      Kernel.const_get("Pry")
+    rescue NameError
+      false
+    end
+    if pry_loaded
+      if self.config.pryrc == :minimal
+        require "appdev_support/pryrc/minimal.rb"
+      elsif self.config.pryrc == :debug
+        require "appdev_support/pryrc/debug.rb"
+      end
+    end
+  end
 end
