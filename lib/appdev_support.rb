@@ -4,7 +4,7 @@ module AppdevSupport
   class Error < StandardError; end
 
   class << self
-    attr_writer :active_record, :action_dispatch
+    attr_writer :active_record, :action_dispatch, :pryrc
 
     def action_dispatch
       @action_dispatch || true
@@ -12,6 +12,10 @@ module AppdevSupport
 
     def active_record
       @active_record || true
+    end
+
+    def pryrc
+      @pryrc || :minimal
     end
 
     def config
@@ -30,6 +34,13 @@ module AppdevSupport
       load "appdev_support/action_dispatch/request/session/store.rb"
       load "appdev_support/action_dispatch/cookies/cookie_jar/fetch.rb"
       load "appdev_support/action_dispatch/cookies/cookie_jar/store.rb"
+    end
+    return unless Object.const_defined?("Pry")
+    case @pryrc
+    when :minimal, true
+      load "appdev_support/pryrc/minimal.rb"
+    when :debug
+      load "appdev_support/pryrc/debug.rb"
     end
   end
 end
