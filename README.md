@@ -118,7 +118,9 @@ end
 AppdevSupport.init
 ```
 
-by default, these settings are `true`. Turn any of them off here. Options are currently grouped by highest parent class.
+In a Rails app, this usually means creating a file in the `config/` folder called `appdev_support.rb`
+
+By default, these settings are `true`. Turn any of them off here. Options are currently grouped by highest parent class.
 
 
 ## Contributing
