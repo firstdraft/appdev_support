@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    appdev_support (0.2.0)
+    appdev_support (0.2.1)
+      tabulo
 
 GEM
   remote: https://rubygems.org/
