@@ -15,7 +15,7 @@ module AppdevSupport
     end
 
     def pryrc
-      @pryrc || :base
+      @pryrc || :minimal
     end
 
     def config
@@ -37,10 +37,10 @@ module AppdevSupport
     end
     return unless Object.const_defined?("Pry")
     case @pryrc
-    when :base, true
-      load "appdev_support/pryrc/base.rb"
-    when :full
-      load "appdev_support/pryrc/full.rb"
+    when :minimal, true
+      load "appdev_support/pryrc/minimal.rb"
+    when :debug
+      load "appdev_support/pryrc/debug.rb"
     end
   end
 end

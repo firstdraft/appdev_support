@@ -1,11 +1,13 @@
 # AppdevSupport
 
+This gem adds patches that are used to make Ruby and Ruby on Rails environments more beginner friendly.
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "appdev_support", git: "https://github.com/firstdraft/appdev_support"
+gem "appdev_support", github: "firstdraft/appdev_support"
 ```
 
 And then execute:
@@ -23,7 +25,7 @@ AppdevSupport.init
 ```
 to load the default settings.
 
-Create an [iniliazer](#configuration) file for customization.
+Create an [initializer](#configuration) file for customization.
 
 ## Usage
 
@@ -54,26 +56,26 @@ Similarly, `.store` can be called on `session` and `cookies` with the expected b
 session.store(:user_id, 1)
 ```
 
-Displaying an `ActiveRecord:Relation` in a View file will display:
+Displaying an `ActiveRecord::Relation` in a View file will display:
 
-```html
-ActiveRecord:Relation:Event (array with 4 Event instances inside)
+```rb
+Event::ActiveRecord_Relation (array with 4 Event instances inside)
 ```
 
-You can call `.at` on an `ActiveRecord:Relation` instead of just `[]` to mirror how Arrays work.
+You can call `.at` on an `ActiveRecord::Relation` instead of just `[]` to mirror how Arrays work.
 
 ```ruby
-Events.all.at(0)
+Event.all.at(0)
 ```
 
 If the containing app has `pry` or `pry-rails` installed, the `print` functionality has been enhanced:
-With the value `:base`:
+With the value `:mimimal`:
 - `ActiveRecord::Relation` objects are displayed like this:
   ```irb
   pry(main)> Todo.all
   => Todo::ActiveRecord_Relation (array with 1 Todo instance inside)
   ```
-With the value `:full`
+With the value `:debug`
 - `ActiveRecord::Relation` objects are displayed like this:
   ```irb
   pry(main)> Todo.all
@@ -108,24 +110,16 @@ With the value `:full`
 Add an initializer:
 
 ```rb
-# frozen_string_literal: true
-
 AppdevSupport.config do |config|
-# config.action_dispatch = true;
-# config.active_record   = true;
-# config.pryrc           = true;
+# config.action_dispatch = true
+# config.active_record   = true
+# config.pryrc           = :minimal
 end
 AppdevSupport.init
 ```
 
 by default, these settings are `true`. Turn any of them off here. Options are currently grouped by highest parent class.
 
-`pryrc` config has the additional options `:base` or `:full` described above. `:base` is equivalent to `true`.
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 

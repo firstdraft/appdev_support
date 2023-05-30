@@ -7,7 +7,8 @@ Pry.config.print = proc do |output, value, _pry_|
     max_rows_to_display_at_once = 5
     num_rows_to_frame_with = 2
     
-    column_names = value.column_names.map(&:to_sym) - [:created_at, :updated_at]
+    column_names_to_exclude =  [:created_at, :updated_at]
+    column_names = value.column_names.map(&:to_sym) - column_names_to_exclude
     
     header_frequency = 10
     border_style = :markdown
